@@ -6,6 +6,11 @@ class ChildrenManager(models.Manager):
         return super().get_queryset().filter(parent__isnull=False)
 
 
+class ParentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(parent__isnull=True)
+
+
 class Comment(models.Model):
     user_name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)
@@ -15,3 +20,4 @@ class Comment(models.Model):
 
     objects = models.Manager()
     children_objects = ChildrenManager()
+    parent_objects = ParentManager()
