@@ -16,7 +16,7 @@ class Comment(models.Model):
     email = models.EmailField(blank=True, null=True)
     home_page = models.URLField(blank=True, null=True)
     text = models.TextField()
-    parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+    parent = models.ForeignKey("self", related_name="children", on_delete=models.CASCADE, blank=True, null=True)
 
     objects = models.Manager()
     children_objects = ChildrenManager()
