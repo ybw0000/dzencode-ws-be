@@ -1,5 +1,5 @@
+import logging
 from datetime import datetime
-from datetime import timedelta
 
 import jwt
 from channels.middleware import BaseMiddleware
@@ -13,9 +13,12 @@ from core.exceptions import IATException
 from core.exceptions import InvalidTokenName
 from core.exceptions import SecretNotFoundException
 
+logger = logging.getLogger(__name__)
+
 
 class JWTAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
+        logger.info(msg={"message": "Received request for authentication in websocket", "scope": scope})
         if token := self.get_token_from_scope(scope):
             try:
                 scope["user"] = self.authenticate_with_token(token)

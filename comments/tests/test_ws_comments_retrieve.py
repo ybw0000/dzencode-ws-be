@@ -155,7 +155,7 @@ class WsCommentsRetrieveTestCase(TestCase):
         )
         response = await communicator.receive_json_from()
         self.assertIn("data", response)
-        self.assertListEqual(CommentSerializer(children[:25], many=True).data, response["data"])
+        self.assertListEqual(CommentSerializer(list(reversed(children))[:25], many=True).data, response["data"])
         self.assertEqual(EventTypes.COMMENT_CHILD_LIST, response["type"])
 
         # get second page
@@ -170,5 +170,5 @@ class WsCommentsRetrieveTestCase(TestCase):
         )
         response = await communicator.receive_json_from()
         self.assertIn("data", response)
-        self.assertListEqual(CommentSerializer(children[25:30], many=True).data, response["data"])
+        self.assertListEqual(CommentSerializer(list(reversed(children))[25:30], many=True).data, response["data"])
         self.assertEqual(EventTypes.COMMENT_CHILD_LIST, response["type"])

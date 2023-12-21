@@ -8,11 +8,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 Django = "^5.0"
-channels = { extras = ["daphne"], version = "^4.0.0" }
 channels-redis = "^4.1.0"
 django-rest-framework = "^0.1.0"
 python-dotenv = "^1.0.0"
 pyjwt = "^2.8.0"
+python-json-logger = "^2.0.7"
+gunicorn = "^21.2.0"
+uvicorn = { extras = ["standard"], version = "^0.25.0" }
+channels = "^4.0.0"
+whitenoise = "^6.6.0"
+psycopg = { extras = ["binary"], version = "^3.1.16" }
 
 
 [tool.poetry.group.dev.dependencies]
@@ -21,6 +26,7 @@ black = "^23.12.0"
 factory-boy = "^3.3.0"
 coverage = "^7.3.3"
 isort = "^5.13.2"
+daphne = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -38,7 +44,7 @@ exclude = '''
 
 [tool.coverage.report]
 exclude_also = ["CHANNEL_LAYERS"]
-omit = ["manage.py", "core/testrunner.py"]
+omit = ["manage.py", "core/testrunner.py", "core/settings.py"]
 
 [tool.isort]
 profile = "black"
