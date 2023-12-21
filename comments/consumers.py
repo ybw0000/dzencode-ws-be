@@ -1,3 +1,5 @@
+import logging
+
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
@@ -7,20 +9,28 @@ from comments.models import Comment
 from comments.serializers import ChildCommentRequestSerializer
 from comments.serializers import CommentSerializer
 
+logger = logging.getLogger(__name__)
+
 
 class CommentsConsumer(AsyncJsonWebsocketConsumer):
     group_name = "comments"
 
+    async def send_json(self, content, close=False):
+        logger.info(msg={"message": "Sending event", "content": content})
+        await super().send_json(content, close)
+
     async def connect(self):
         await self.channel_layer.group_add(group=self.group_name, channel=self.channel_name)
         await self.accept()
+        logger.info(msg={"message": f"WebSocket connected: {self.channel_name}"})
         await self.send_json({"type": EventTypes.COMMENT_PARENT_LIST, "data": await self.__get_all_parent_comments()})
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
-        await self.close(close_code)
+        logger.info(msg={"message": f"WebSocket disconnected: {self.channel_name}"})
 
     async def receive_json(self, content, **kwargs):
+        logger.info(msg={"message": f"Received event", "content": content})
         message_type = content.get("type")
         if message_type == EventTypes.COMMENT_CREATE:
             await self.__handle_create_comment(content.get("data"), **kwargs)

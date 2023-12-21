@@ -3,12 +3,12 @@ from django.db import models
 
 class ChildrenManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(parent__isnull=False)
+        return super().get_queryset().filter(parent__isnull=False).order_by("-id")
 
 
 class ParentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(parent__isnull=True)
+        return super().get_queryset().filter(parent__isnull=True).order_by("-id")
 
 
 class Comment(models.Model):
