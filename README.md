@@ -42,7 +42,17 @@ print('Bearer %s' % jwt.encode({'iss': 'client', 'iat': datetime.now().timestamp
 
 ### WS endpoint 
 ws://localhost:8000/ws/comments/
-
+### GraphQL endpoint
+http://localhost:8000/graphql/
+### Adminer endpoint
+http://localhost:8080/
+```text
+System: PostgreSQL
+Server: db
+Username: db_user
+Password: db_password
+Database: dzencode-comments
+```
 #### Create new comment
 ```
 {

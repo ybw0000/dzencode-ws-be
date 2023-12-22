@@ -16,7 +16,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from core.logging import LOGGING
+from core.logging import LOGGING  # noqa: F401
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

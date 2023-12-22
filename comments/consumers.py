@@ -30,7 +30,7 @@ class CommentsConsumer(AsyncJsonWebsocketConsumer):
         logger.info(msg={"message": f"WebSocket disconnected: {self.channel_name}"})
 
     async def receive_json(self, content, **kwargs):
-        logger.info(msg={"message": f"Received event", "content": content})
+        logger.info(msg={"message": f"Received event {content.get('type')}", "content": content})
         message_type = content.get("type")
         if message_type == EventTypes.COMMENT_CREATE:
             await self.__handle_create_comment(content.get("data"), **kwargs)
